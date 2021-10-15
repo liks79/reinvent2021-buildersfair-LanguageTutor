@@ -218,8 +218,6 @@ def get_transcribe_language():
         languageList = []
 
         for language in languages:
-            # add only none-duplicate language codes
-            print (language, type(language))
             dic = {
                 'language': language[0],
                 'languageCode': language[1]
