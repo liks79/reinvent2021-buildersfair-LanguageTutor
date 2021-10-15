@@ -32,6 +32,7 @@ def get_presigned_url(region='us-west-2', language_code='en-US'):
     credentials = boto3.Session().get_credentials()
     access_key = credentials.access_key
     secret_key = credentials.secret_key
+    session_token = credentials.token
 
     # Create a date for headers and the credential string
     t = datetime.datetime.utcnow()
@@ -52,6 +53,7 @@ def get_presigned_url(region='us-west-2', language_code='en-US'):
     canonical_querystring = add_param(canonical_querystring, 'X-Amz-Credential', quote(credential, safe=''))
     canonical_querystring = add_param(canonical_querystring, 'X-Amz-Date', amzdate)
     canonical_querystring = add_param(canonical_querystring, 'X-Amz-Expires', '300')
+    canonical_querystring = add_param(canonical_querystring, 'X-Amz-Security-Token', quote(session_token, safe=''))
     canonical_querystring = add_param(canonical_querystring, 'X-Amz-SignedHeaders', signed_headers)
     canonical_querystring = add_param(canonical_querystring, 'language-code', language_code)
     canonical_querystring = add_param(canonical_querystring, 'media-encoding', 'pcm')
